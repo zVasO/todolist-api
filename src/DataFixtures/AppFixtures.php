@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
         $taskNotDone = $this->createTask('Task Not Done', $user, false, 'what a description');
         $manager->persist($taskNotDone);
 
-        $taskDone = $this->createTask('Task Done', $user, true);
+        $taskDone = $this->createTask('Task Done', $user, true, 'the description');
         $manager->persist($taskDone);
 
         $manager->flush();
@@ -52,10 +52,10 @@ class AppFixtures extends Fixture
      * @param string $name
      * @param User $user
      * @param bool $isDone
-     * @param string|null $description
+     * @param string $description
      * @return Task
      */
-    private function createTask(string $name, User $user, bool $isDone, ?string $description = null): Task
+    private function createTask(string $name, User $user, bool $isDone, string $description): Task
     {
         $task = new Task();
         $task->setName($name)
