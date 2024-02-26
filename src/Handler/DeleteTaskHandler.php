@@ -3,20 +3,19 @@
 namespace App\Handler;
 
 use App\Command\DeleteTaskCommand;
-use App\Command\UpdateTaskCommand;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Exception\RuntimeException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Symfony\Component\HttpFoundation\Request;
+use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class DeleteTaskHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-    ) {
+    )
+    {
     }
 
     public function handle(DeleteTaskCommand $command, User $user): void
@@ -24,7 +23,7 @@ final class DeleteTaskHandler
         $task = $this->entityManager->getRepository(Task::class)->find($command->id);
 
         if (!$task) {
-            throw new \InvalidArgumentException('Task not found.');
+            throw new InvalidArgumentException('Task not found.');
         }
 
         if ($task->getUser() !== $user) {

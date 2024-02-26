@@ -6,16 +6,16 @@ use App\Command\UpdateTaskCommand;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use http\Exception\RuntimeException;
-use Illuminate\Auth\Access\AuthorizationException;
+use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UpdateTaskHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
-    ) {
+    )
+    {
     }
 
     public function handle(UpdateTaskCommand $command, User $user): void
@@ -23,7 +23,7 @@ final readonly class UpdateTaskHandler
         $task = $this->entityManager->getRepository(Task::class)->find($command->id);
 
         if (!$task) {
-            throw new \InvalidArgumentException('Task not found.');
+            throw new InvalidArgumentException('Task not found.');
         }
 
         if ($task->getUser() !== $user) {
