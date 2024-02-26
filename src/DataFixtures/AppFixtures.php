@@ -26,6 +26,7 @@ class AppFixtures extends Fixture
     /**
      * Create a User
      * @param string $email
+     * @param string $plainPassword
      * @return User
      */
     private function createUser(string $email, string $plainPassword): User
