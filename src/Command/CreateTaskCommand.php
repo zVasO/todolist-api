@@ -4,12 +4,13 @@ namespace App\Command;
 
 use App\Entity\User;
 
-final readonly class CreateTaskCommand
+final class CreateTaskCommand
 {
+    public User $user;
+
     public function __construct(
         public string $name,
         public string $description,
-        public User $user
     ) {
     }
 }
