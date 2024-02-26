@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api/user', name: 'create_user', methods: ['POST'], format: 'json')]
+#[Route('/api/registration', name: 'create_user', methods: ['POST'], format: 'json')]
 class CreateUserController extends AbstractController
 {
     public function __construct(
