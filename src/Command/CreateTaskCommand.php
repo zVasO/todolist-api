@@ -7,8 +7,8 @@ use App\Entity\User;
 final readonly class CreateTaskCommand
 {
     public function __construct(
-        public string $title,
-        public ?string $description,
+        public string $name,
+        public string $description,
         public User $user
     ) {
     }
