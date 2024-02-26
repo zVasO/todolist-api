@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -18,8 +19,14 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $user = $this->createUser('test@testing.io', 'password');
-
         $manager->persist($user);
+
+        $taskNotDone = $this->createTask('Task Not Done', $user, false, 'what a description');
+        $manager->persist($taskNotDone);
+
+        $taskDone = $this->createTask('Task Done', $user, true);
+        $manager->persist($taskDone);
+
         $manager->flush();
     }
 
@@ -39,5 +46,23 @@ class AppFixtures extends Fixture
         );
         $user->setPassword($hashedPassword);
         return $user;
+    }
+
+    /**
+     * @param string $name
+     * @param User $user
+     * @param bool $isDone
+     * @param string|null $description
+     * @return Task
+     */
+    private function createTask(string $name, User $user, bool $isDone, ?string $description = null): Task
+    {
+        $task = new Task();
+        $task->setName($name)
+            ->setUser($user)
+            ->setIsDone($isDone)
+            ->setDescription($description);
+
+        return $task;
     }
 }
