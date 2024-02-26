@@ -7,7 +7,10 @@ use App\Command\UpdateTaskCommand;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\RuntimeException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 final class DeleteTaskHandler
 {
@@ -25,7 +28,7 @@ final class DeleteTaskHandler
         }
 
         if ($task->getUser() !== $user) {
-            throw new AuthorizationException('You are not allowed to do this action !');
+            throw new RuntimeException('You are not allowed to do this action !', Response::HTTP_FORBIDDEN);
         }
 
         $this->entityManager->remove($task);

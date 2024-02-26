@@ -6,7 +6,10 @@ use App\Command\UpdateTaskCommand;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use http\Exception\RuntimeException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UpdateTaskHandler
 {
@@ -24,7 +27,7 @@ final readonly class UpdateTaskHandler
         }
 
         if ($task->getUser() !== $user) {
-            throw new AuthorizationException('You are not allowed to do this action !');
+            throw new RuntimeException('You are not allowed to do this action !', Response::HTTP_FORBIDDEN);
         }
 
         if (null !== $command->name) {
